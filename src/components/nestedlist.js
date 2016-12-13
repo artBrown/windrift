@@ -64,7 +64,7 @@ const mapStateToProps = (state, ownProps, currentExpansion=0, lastSelection=unde
 
 export const renderText = (tokens, handler, inAnchor=false) => {
   if (typeof tokens === 'string') {
-    return <span>{" " + tokens + " "}</span>
+    return <span key={tokens}>{" " + tokens + " "}</span>
   }
   var ret = []
   var asAnchor = false
@@ -84,10 +84,10 @@ export const renderText = (tokens, handler, inAnchor=false) => {
     }
   }
   if (asAnchor) {
-    return <a onClick={() => handler(tokens)}>{ret}</a>
+    return <a onClick={() => handler(tokens)} key={tokens.length}>{ret}</a>
   }
   else {
-    return <span key={ret.length}>{ret}</span>
+    return ret
   }
 }
 
@@ -134,7 +134,7 @@ export const tokenize = (s) => {
 
   // don't allow empty list of tokens
   if (!tokens) {
-    throw ("No tokens")  // FIXME
+    throw ("No tokens")
   }
   // ensure that the first token must be a bracket of some kind - don't allow "abc (def) ghi",
   // it has to be "[abc (def) ghi]".
